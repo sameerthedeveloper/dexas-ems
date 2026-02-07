@@ -135,7 +135,7 @@ export default function DashboardPage() {
             <h3 className="text-lg font-semibold">On Leave Distribution</h3>
             <p className="text-sm text-muted-foreground">Breakdown of current leave types.</p>
           </div>
-          <div className="h-[300px] w-full flex items-center justify-center">
+          <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie

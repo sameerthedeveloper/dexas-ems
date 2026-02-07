@@ -1,9 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { tasks } from "@/lib/data"
+import { getTasks } from "@/lib/data"
 import { CheckCircle2, Clock, Circle, Plus, Calendar } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useQuery } from "@tanstack/react-query"
 
 const statusConfig = {
     'To Do': { icon: Circle, color: 'text-slate-500', bg: 'bg-slate-50 dark:bg-slate-900/50', border: 'border-slate-200 dark:border-slate-800' },
@@ -12,6 +13,11 @@ const statusConfig = {
 }
 
 export default function TasksPage() {
+    const { data: tasks = [] } = useQuery({
+        queryKey: ['tasks'],
+        queryFn: getTasks
+    })
+
     return (
         <div className="h-full flex flex-col space-y-4">
             <div className="flex items-center justify-between">

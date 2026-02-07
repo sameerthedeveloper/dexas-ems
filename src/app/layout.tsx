@@ -4,6 +4,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { cn } from "@/lib/utils";
+import Providers from "@/components/common/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,9 +39,11 @@ export default function RootLayout({
         <Sidebar className="" />
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <Header />
-          <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-muted/20">
-            {children}
-          </main>
+          <Providers>
+            <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-muted/20">
+              {children}
+            </main>
+          </Providers>
         </div>
       </body>
     </html>

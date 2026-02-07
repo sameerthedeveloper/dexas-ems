@@ -1,19 +1,33 @@
 "use client"
 
 import * as React from "react"
-import { Candidate, candidates as initialCandidates } from "@/lib/data"
+import { Candidate, getCandidates } from "@/lib/data"
 import { CandidateCard } from "./CandidateCard"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
+import { useQuery } from "@tanstack/react-query"
 
 const stages = ['Applied', 'Screening', 'Interview', 'Offer', 'Hired'] as const
 
 export function KanbanBoard() {
-    const [items, setItems] = React.useState<Candidate[]>(initialCandidates)
+    const { data: initialData = [], isLoading } = useQuery({
+        queryKey: ['candidates'],
+        queryFn: getCandidates
+    })
+
+    // We need local state for immediate drag updates
+    const [items, setItems] = React.useState<Candidate[]>([])
     const [isMounted, setIsMounted] = React.useState(false)
 
     React.useEffect(() => {
         setIsMounted(true)
     }, [])
+
+    // Sync server data to local state when loaded
+    React.useEffect(() => {
+        if (initialData.length > 0) {
+            setItems(initialData)
+        }
+    }, [initialData])
 
     const onDragEnd = (result: DropResult) => {
         if (!result.destination) return
@@ -23,11 +37,10 @@ export function KanbanBoard() {
         const draggableId = result.draggableId
 
         if (sourceStage === destStage) {
-            // Reordering within same column (not implemented for simplicity in mock, just visual)
             return
         }
 
-        // Update item stage
+        // Update item stage locally
         setItems((prev) =>
             prev.map(item =>
                 item.id === draggableId
@@ -35,9 +48,11 @@ export function KanbanBoard() {
                     : item
             )
         )
+
+        // TODO: Mutation to update in Supabase
     }
 
-    if (!isMounted) return <div className="p-4 text-muted-foreground">Loading board...</div>
+    if (!isMounted || isLoading) return <div className="p-4 text-muted-foreground">Loading board...</div>
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>

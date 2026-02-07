@@ -45,7 +45,8 @@ export function Sidebar({ className, ...props }: SidebarProps) {
             {/* Mobile Menu Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed top-4 left-4 z-50 md:hidden p-2 bg-primary text-primary-foreground rounded-md shadow-lg"
+                className="md:hidden fixed z-[101] bottom-6 right-6 p-4 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 transition-colors"
+                aria-label="Toggle Menu"
             >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -53,7 +54,7 @@ export function Sidebar({ className, ...props }: SidebarProps) {
             {/* Overlay for mobile */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 z-40 bg-black/50 md:hidden"
+                    className="fixed inset-0 z-[99] bg-black/50 md:hidden"
                     onClick={() => setIsOpen(false)}
                 />
             )}
@@ -61,7 +62,7 @@ export function Sidebar({ className, ...props }: SidebarProps) {
             {/* Sidebar Container */}
             <aside
                 className={cn(
-                    "fixed inset-y-0 left-0 z-40 w-64 bg-sidebar border-r border-sidebar-border transition-transform duration-300 md:translate-x-0 md:static",
+                    "fixed inset-y-0 left-0 z-[100] w-64 bg-sidebar border-r border-sidebar-border transition-transform duration-300 md:translate-x-0 md:static",
                     isOpen ? "translate-x-0" : "-translate-x-full",
                     className
                 )}

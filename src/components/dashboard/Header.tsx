@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 export function Header({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
     return (
-        <header className={cn("flex items-center justify-between px-6 py-4 bg-background border-b border-border", className)} {...props}>
+        <header className={cn("flex items-center justify-between px-4 md:px-6 py-3 md:py-4 bg-background border-b border-border sticky top-0 z-10", className)} {...props}>
             <div className="flex items-center gap-4 flex-1">
                 {/* Mobile menu placeholder space if needed, otherwise sidebar handles it */}
                 <div className="relative w-full max-w-md hidden md:block">

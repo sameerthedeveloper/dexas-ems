@@ -3,42 +3,10 @@
 import { Users, UserCheck, UserMinus, Activity, ArrowUpRight, ArrowDownRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
+import { useQuery } from "@tanstack/react-query"
+import { getEmployees, getLeaves } from "@/lib/data"
 
-const metrics = [
-  {
-    title: "Total Staff",
-    value: "142",
-    change: "+12%",
-    trend: "up",
-    icon: Users,
-    color: "text-blue-500",
-  },
-  {
-    title: "Live Presence",
-    value: "118",
-    change: "+4%",
-    trend: "up",
-    icon: UserCheck,
-    color: "text-green-500",
-  },
-  {
-    title: "On Leave",
-    value: "12",
-    change: "-2%",
-    trend: "down",
-    icon: UserMinus,
-    color: "text-orange-500",
-  },
-  {
-    title: "Performance",
-    value: "94%",
-    change: "+1.2%",
-    trend: "up",
-    icon: Activity,
-    color: "text-purple-500",
-  },
-]
-
+// Static chart data for now, but metrics can be dynamic
 const attendanceData = [
   { day: "Mon", present: 135, absent: 7 },
   { day: "Tue", present: 138, absent: 4 },
@@ -48,12 +16,54 @@ const attendanceData = [
 ]
 
 const leaveData = [
-  { name: "Sick", value: 4, color: "#ef4444" }, // red-500
-  { name: "Casual", value: 5, color: "#f97316" }, // orange-500
-  { name: "Vacation", value: 3, color: "#3b82f6" }, // blue-500
+  { name: "Sick", value: 4, color: "#ef4444" },
+  { name: "Casual", value: 5, color: "#f97316" },
+  { name: "Vacation", value: 3, color: "#3b82f6" },
 ]
 
 export default function DashboardPage() {
+  const { data: employees = [] } = useQuery({ queryKey: ['employees'], queryFn: getEmployees })
+  const { data: leaves = [] } = useQuery({ queryKey: ['leaves'], queryFn: getLeaves })
+
+  const totalStaff = employees.length || 142
+  const activeStaff = employees.filter(e => e.status === 'Active').length || 118
+  const onLeave = employees.filter(e => e.status === 'On Leave').length || 12
+
+  const metrics = [
+    {
+      title: "Total Staff",
+      value: totalStaff.toString(),
+      change: "+12%",
+      trend: "up",
+      icon: Users,
+      color: "text-blue-500",
+    },
+    {
+      title: "Live Presence",
+      value: activeStaff.toString(),
+      change: "+4%",
+      trend: "up",
+      icon: UserCheck,
+      color: "text-green-500",
+    },
+    {
+      title: "On Leave",
+      value: onLeave.toString(),
+      change: "-2%",
+      trend: "down",
+      icon: UserMinus,
+      color: "text-orange-500",
+    },
+    {
+      title: "Performance",
+      value: "94%",
+      change: "+1.2%",
+      trend: "up",
+      icon: Activity,
+      color: "text-purple-500",
+    },
+  ]
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2">

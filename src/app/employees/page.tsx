@@ -1,12 +1,18 @@
 "use client"
 
 import * as React from "react"
-import { employees } from "@/lib/data"
+import { getEmployees } from "@/lib/data"
 import { EmployeeCard } from "@/components/employees/EmployeeCard"
 import { Search } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
 
 export default function EmployeesPage() {
     const [searchTerm, setSearchTerm] = React.useState("")
+
+    const { data: employees = [], isLoading } = useQuery({
+        queryKey: ['employees'],
+        queryFn: getEmployees
+    })
 
     const filteredEmployees = employees.filter(employee =>
         employee.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -35,13 +41,19 @@ export default function EmployeesPage() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {filteredEmployees.map((employee) => (
-                    <EmployeeCard key={employee.id} employee={employee} />
-                ))}
-                {filteredEmployees.length === 0 && (
-                    <div className="col-span-full py-12 text-center text-muted-foreground">
-                        No employees found matching "{searchTerm}"
-                    </div>
+                {isLoading ? (
+                    <div className="col-span-full py-12 text-center text-muted-foreground">Loading employees...</div>
+                ) : (
+                    <>
+                        {filteredEmployees.map((employee) => (
+                            <EmployeeCard key={employee.id} employee={employee} />
+                        ))}
+                        {filteredEmployees.length === 0 && (
+                            <div className="col-span-full py-12 text-center text-muted-foreground">
+                                No employees found matching "{searchTerm}"
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

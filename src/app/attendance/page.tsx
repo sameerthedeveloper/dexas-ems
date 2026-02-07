@@ -1,13 +1,19 @@
 "use client"
 
 import * as React from "react"
-import { leaves } from "@/lib/data"
+import { getLeaves } from "@/lib/data"
 import { Clock, CalendarCheck, MapPin, CheckCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useQuery } from "@tanstack/react-query"
 
 export default function AttendancePage() {
     const [isCheckedIn, setIsCheckedIn] = React.useState(false)
     const [currentTime, setCurrentTime] = React.useState(new Date())
+
+    const { data: leaves = [] } = useQuery({
+        queryKey: ['leaves'],
+        queryFn: getLeaves
+    })
 
     React.useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000)

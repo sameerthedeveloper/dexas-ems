@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DEXAZ EMS (Employee Management System)
 
-## Getting Started
+A comprehensive, mobile-first Employee Management System built with Next.js 14, Tailwind CSS, and PWA capabilities. Designed to mimic the clean aesthetic of modern enterprise software with a focus on touch interactions and offline accessibility.
 
-First, run the development server:
+![DEXAZ EMS Dashboard](public/icon-512x512.png)
+*(Note: Replace with actual dashboard screenshot in production)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+- **Executive Dashboard**: Real-time metrics for staff, presence, leaves, and performance. Visualized with interactive charts.
+- **Employee Directory**: Searchable list of all employees with status indicators (Active, Offline, On Leave).
+- **Recruitment Pipeline**: Kanban board for tracking candidates through stages (Applied, Screening, Interview, Offer, Hired).
+- **Attendance & Leave**: Digital clock for check-ins/outs and a history log of leave requests.
+- **Task Management**: Board view to assign and track tasks by priority and status.
+- **PWA Ready**: Installable on mobile devices with offline support via service workers.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **UI Components**: Radix UI primitives (via Shadcn concepts), Lucide React Icons
+- **Data Visualization**: Recharts
+- **Drag & Drop**: @hello-pangea/dnd
+- **State Management**: Zustand
+- **PWA**: @ducanh2912/next-pwa
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- Node.js 18.17 or later
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sameerthedeveloper/dexas-ems.git
+   cd dexas-ems
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   > **Note**: This project uses a custom webpack config for PWA compatibility. The `dev` script is configured to use `--webpack`.
+
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+## 📱 PWA Usage
+
+1. Open the application in your mobile browser.
+2. Select "Add to Home Screen" from the browser menu.
+3. The app will install as a standalone application.
+
+## 📂 Project Structure
+
+```
+src/
+├── app/              # Next.js App Router pages
+├── components/       # React components
+│   ├── dashboard/    # Layout components (Sidebar, Header)
+│   ├── employees/    # Employee directory components
+│   ├── recruitment/  # Kanban board components
+│   └── ui/           # Shared UI elements
+├── lib/              # Utilities and Mock Data
+└── types/            # TypeScript definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📄 License
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open-source and available under the [MIT License](LICENSE).
